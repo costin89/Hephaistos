@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zentrierte Seite mit Suchfeld</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    #container {
+      text-align: center;
+    }
+    input[type="text"] {
+      padding: 8px;
+      margin-right: 8px;
+    }
+    input[type="submit"] {
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div id="container">
+  <h1>Suche</h1>
+  <form id="searchForm" onsubmit="return false;">
+    <input type="text" id="searchInput" placeholder="Suche eingeben">
+    <input type="submit" value="Suchen" onclick="search()">
+  </form>
+</div>
+
+<script>
+  function search() {
+    var searchText = document.getElementById("searchInput").value;
+    if (searchText.trim() !== "") {
+      var searchUrl = "https://www.example.com/search?q=" + encodeURIComponent(searchText);
+      window.open(searchUrl, "_blank");
+    }
+  }
+</script>
+
+</body>
+</html>
