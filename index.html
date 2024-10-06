@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Kartenanzeige mit Bootstrap</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 50px;
+        }
+        .card-number {
+            position: relative;
+            top: -40px;
+            left: 0;
+            font-weight: bold;
+            color: #fff;
+            max-width: 150px;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 5px;
+            z-index: 2;
+        }
+        .card-title-overlay {
+            position: relative;
+            top: -20px;
+            left: 0;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 5px;
+            max-width: 500px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            z-index: 2;
+        }
+        .card-img-custom {
+            width: 256px;
+            height: 256px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        .card-text-fixed {
+            height: calc(1.2em * 12); /* 6 Zeilen bei 1.2em Zeilenhöhe */
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 12;
+            -webkit-box-orient: vertical;
+        }
+        .alert-fixed {
+            height: calc(1.2em * 6); /* 3 Zeilen bei 1.2em Zeilenhöhe */
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 6;
+            -webkit-box-orient: vertical;
+        }
+        .navigation-buttons {
+            margin-top: 20px;
+        }
+        /* Sicherstellen, dass die Karte immer das gleiche Layout behält */
+        .card-body {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            align-items: flex-start;
+        }
+        @media (max-width: 767.98px) {
+            /* Auf kleinen Bildschirmen das Layout anpassen, Bilder unten */
+            .card-body {
+                flex-direction: column;
+                align-items: center;
+            }
+            .card-img-custom {
+                width: 256px;
+                height: 256px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Card-Nummer und Titel außerhalb des Kartencontainers -->
+    <div id="cardNumberTitleContainer" class="mb-2">
+        <div class="card-number">Karte 1 / 3</div>
+        <div class="card-title-overlay">Arbeitseinweisung Deckel Maho DMC 50H</div>
+    </div>
+    
+    <div id="cardContainer" class="position-relative">
+        <!-- Statische Karte -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <!-- Text-Spalte -->
+                <div class="flex-grow-1">
+                    <p id="mainText" class="card-text-fixed mb-2">Schalten Sie den Luftdruck ein. Hierzu muss der Luftdruckhahn hinter der Fräsmaschine aufgedreht werden.</p>
+                    <div id="warningText" class="alert alert-warning alert-fixed">Wichtig: Ausgangszustand wie in Dokument „Vorbereitung und Einrichtung“ beschrieben, herstellen.</div>
+                </div>
+
+                <!-- Bild-Spalte -->
+                <div class="flex-shrink-0">
+                    <img id="cardImage" src="images/xbox.jpg" alt="Arbeitseinweisung Deckel Maho DMC 50H" class="img-fluid rounded card-img-custom">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between navigation-buttons">
+        <button id="prevBtn" class="btn btn-primary" disabled>Zurück</button>
+        <button id="nextBtn" class="btn btn-primary">Weiter</button>
+    </div>
+</div>
+
+<!-- Bootstrap JS und Abhängigkeiten -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- JavaScript zum Aktualisieren der UI -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const cardNumberTitleContainer = document.getElementById('cardNumberTitleContainer');
+        const cardNumberElement = cardNumberTitleContainer.querySelector('.card-number');
+        const cardTitleElement = cardNumberTitleContainer.querySelector('.card-title-overlay');
+        const mainTextElement = document.getElementById('mainText');
+        const warningTextElement = document.getElementById('warningText');
+        const cardImageElement = document.getElementById('cardImage');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        let cards = [];
+        let currentIndex = 0;
+
+        // Funktion zum Laden der CSV-Datei
+        fetch('Blatt1.csv')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Netzwerkantwort war nicht ok: ${response.statusText}`);
+                }
+                return response.text();
+            })
+            .then(text => {
+                parseCSV(text);
+                if (cards.length > 0) {
+                    displayCard(currentIndex);
+                    updateButtons();
+                } else {
+                    mainTextElement.textContent = 'Keine Daten verfügbar';
+                }
+            })
+            .catch(error => {
+                console.error('Fehler beim Laden der CSV:', error);
+                mainTextElement.textContent = 'Fehler beim Laden der Daten';
+            });
+
+        // Funktion zum Parsen der CSV
+        function parseCSV(data) {
+            const lines = data.trim().split('\n');
+            const headers = lines[0].split(';').map(header => header.trim());
+            for (let i = 1; i < lines.length; i++) {
+                const obj = {};
+                const currentline = lines[i].split(';');
+                headers.forEach((header, index) => {
+                    obj[header] = currentline[index] ? currentline[index].trim() : ''; // Leere Werte zulassen
+                });
+                cards.push(obj);
+            }
+        }
+
+        // Funktion zum Anzeigen einer Karte
+        function displayCard(index) {
+            const cardData = cards[index];
+            const totalCards = cards.length; // Gesamtanzahl der Karten
+
+            // Aktualisiere die Kartennummer und den Titel
+            cardNumberElement.textContent = `Karte ${index + 1} / ${totalCards}`;
+            cardTitleElement.textContent = cardData['Titel'] ? cardData['Titel'] : 'Kein Titel';
+
+            // Aktualisiere den Haupttext
+            mainTextElement.textContent = cardData['Maintext'] ? cardData['Maintext'] : 'Kein Text verfügbar';
+
+            // Aktualisiere die Warnung
+            if (cardData['Warning'] && cardData['Warning'].toLowerCase() !== 'none') {
+                warningTextElement.textContent = cardData['Warning'];
+            } else {
+                warningTextElement.textContent = 'Keine Warnung verfügbar';
+            }
+
+            // Aktualisiere das Bild
+            if (cardData['Media'] && cardData['Media'].toLowerCase() !== 'none') {
+                cardImageElement.src = cardData['Media'];
+                cardImageElement.alt = cardData['Titel'] ? cardData['Titel'] : 'Kein Titel';
+            } else {
+                cardImageElement.src = 'https://via.placeholder.com/256?text=Kein+Bild';
+                cardImageElement.alt = 'Kein Bild verfügbar';
+            }
+        }
+
+        // Funktion zur Aktualisierung der Button-States
+        function updateButtons() {
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex === cards.length - 1;
+        }
+
+        // Event Listener für den "Weiter" Button
+        nextBtn.addEventListener('click', () => {
+            if (currentIndex < cards.length - 1) {
+                currentIndex++;
+                displayCard(currentIndex);
+                updateButtons();
+            }
+        });
+
+        // Event Listener für den "Zurück" Button
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                displayCard(currentIndex);
+                updateButtons();
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

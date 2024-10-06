@@ -1,0 +1,53 @@
+CardNumber;Titel;Maintext;Warning;Media;SwitchOn;SelectedCard
+1;Arbeitseinweisung Deckel Maho DMC 50H;Schalten Sie den Luftdruck ein. Hierzu muss der Luftdruckhahn hinter der Fräsmaschine aufgedreht werden. ;Wichtig: Ausgangszustand wie in Dokument „Vorbereitung und Einrichtung“ beschrieben, herstellen.;1.jpg;0;none
+2;Arbeitseinweisung Deckel Maho DMC 50H;Schalten Sie den Hauptschalter ein.;Wichtig: Warten Sie ab bis die Maschine vollständig hochgefahren ist. Beachten Sie das Display. Die Tür muss zudem geschlossen sein.;none;0;none
+3;Arbeitseinweisung Deckel Maho DMC 50H;Als nächstes fahren Sie die Hydraulik hoch.;Achtung: Die Taste muss leuchten!;none;0;none
+4;Arbeitseinweisung Deckel Maho DMC 50H;Ansonsten drücken Sie diese Tasten in der angegebenen Reihenfolge.;Achtung: ggfs. muss die Tastenkombination nach kurzer Pause wiederholt werden.;none;0;none
+5;Arbeitseinweisung Deckel Maho DMC 50H;Referenzieren.;none;none;0;none
+6;Arbeitseinweisung Deckel Maho DMC 50H;Vorschub ein.;none;none;0;none
+7;Arbeitseinweisung Deckel Maho DMC 50H;Cycle Start. ;ACHTUNG: Nun verfährt die Maschine alle Achsen sehr langsam, bis sie ihre Referenzmarken gefunden hat.;none;0;none
+8;Arbeitseinweisung Deckel Maho DMC 50H;Optional: Tür öffnen.;none;none;0;none
+9;Arbeitseinweisung Deckel Maho DMC 50H;Schalten Sie die Handfunktion ein. ;Beide Türen müssen dabei geschlossen sein.;none;0;none
+10;Arbeitseinweisung Deckel Maho DMC 50H;Wählen Sie Palettenwechsel aus. ;„Ref- Point“ darf dabei nicht eingeschaltet sein.;none;0;none
+11;Arbeitseinweisung Deckel Maho DMC 50H;Zum vorwärts drehen; drücken Sie die lila Taste. 1. Der Vorschub muss eingeschaltet (Feed Start) und 2. auf > 0% gestellt sein. 3. Die Lila Taste erst Loslassen, wenn die Endposition erreicht ist. ;none;0;none
+12;Arbeitseinweisung Deckel Maho DMC 50H;Über „Maschine“ gelangen Sie wieder ins Hauptmenü.;none;none;0;none
+13;Arbeitseinweisung Deckel Maho DMC 50H;Führen Sie den Werkstückwechsel an der linken Tür durch.;none;none;0;none
+14;Arbeitseinweisung Deckel Maho DMC 50H;Als nächstes entriegeln Sie den Turm zum Drehen mit dem Fußpedal und drehen manuell die gewünschte Seite nach vorne. ;Der Turm rastet immer alle 90° wieder ein.;none;0;none
+15;Arbeitseinweisung Deckel Maho DMC 50H;Drehmomentschlüssel auf 40 Nm eingestellen (obere Skala).;Hinweis: Wenn es nicht der Fall ist, laut Abbildung einstellen.;none;0;none
+16;Arbeitseinweisung Deckel Maho DMC 50H;Entnehmen Sie die Teile: Mit Drehmomentenschlüssel öffnen. ;Bitte beide Teile mit einer Hand festhalten, sodass sie nicht herunterfallen.;none;0;none
+17;Arbeitseinweisung Deckel Maho DMC 50H;Legen Sie neue Rohlinge ein und schieben bis an den rechten Anschlag.;none;none;0;none
+18;Arbeitseinweisung Deckel Maho DMC 50H;Mit dem eingestelltem Drehmomentenschlüssel richtig festziehen; dann den Turm drehen und die einseitig bearbeiteten Teile, wie abgebildet einsetzen. Die Teile passen falsch nicht rein.;none;0;none
+19;Arbeitseinweisung Deckel Maho DMC 50H;Die einseitig bearbeiteten Teile; wie gezeigt mit einem Hammer festigen.;none;0;none
+20;Arbeitseinweisung Deckel Maho DMC 50H;Das „V“ muss am Schluss nach vorne zeigen; drehen Sie hierzu den Turm entsprechend. Schließen Sie die Tür im Anschluss.;none;0;none
+21;Arbeitseinweisung Deckel Maho DMC 50H;Wählen Sie „Automatik“ aus.;none;none;0;none
+22;Arbeitseinweisung Deckel Maho DMC 50H;Über „Menu Select“ gelangen Sie ins Untermenü.;none;none;0;none
+23;Arbeitseinweisung Deckel Maho DMC 50H;„Programm“ auswählen.;none;none;0;none
+24;Arbeitseinweisung Deckel Maho DMC 50H;Als nächstes „Werkstücke“ auswählen.;none;none;0;none
+25;Arbeitseinweisung Deckel Maho DMC 50H;Mit den Pfeiltasten zu dem Ordner ZYLINDER_MIT_NUT navigieren;diesen mit der gelben Input Taste öffnen und hier in: richtiges Programm (Turm 1 oder 2, 25er oder 40er Boden) auswählen.;none;0;none
+26;Arbeitseinweisung Deckel Maho DMC 50H;Auswahl mit der Taste: Anwahl bestätigen.;none;none;0;none
+27;Arbeitseinweisung Deckel Maho DMC 50H;Zurück zum Hauptmenü.;none;none;0;none
+28;Arbeitseinweisung Deckel Maho DMC 50H;Vorschub ein.;none;none;0;none
+29;Arbeitseinweisung Deckel Maho DMC 50H;Poti zurückdrehen. Mit dem Poti wird die Geschwindigkeit geregelt. Zu Anfang bitte runter drehen;dann nach und nach auf 100% stellen.;none;0;none
+30;Arbeitseinweisung Deckel Maho DMC 50H;Cycle Start. ;Achtung: Fräsvorgang wird gestartet.;none;0;none
+31;Arbeitseinweisung Deckel Maho DMC 50H;MDA-Taste drücken.;none;none;0;none
+32;Arbeitseinweisung Deckel Maho DMC 50H;Im MDA-Feld auf dem Bildschirm das Semikolon vor „T=“OI_MK_50_HM“ entfernen. Mit Cursor-Tasten; Semikolon-Taste und Del-Taste, T=“OI_MK_50_HM wird zu: T=“OI_MK_50_HM.;none;0;none
+33;Arbeitseinweisung Deckel Maho DMC 50H;Nun die Cycle Start-Taste drücken. Warten Sie den Werkzeugwechsel kurz ab.;none;none;0;none
+34;Arbeitseinweisung Deckel Maho DMC 50H;Jog-Taste drücken.;none;none;0;none
+35;Arbeitseinweisung Deckel Maho DMC 50H;Aktivieren Sie die Handbedienung über die Taste mit dem Hand-Symbol.;none;none;0;none
+36;Arbeitseinweisung Deckel Maho DMC 50H;„Pfeil nach oben“-Taste drücken (die Taste ist unter dem Bildschirm).;none;none;0;none
+37;Arbeitseinweisung Deckel Maho DMC 50H;„Hilfsfunktionen“ auswählen.;none;none;0;none
+38;Arbeitseinweisung Deckel Maho DMC 50H;„Werkstückdusche“ auswählen. Die Maschine beginnt nun zu reinigen.;none;none;0;none
+39;Arbeitseinweisung Deckel Maho DMC 50H;„Spänespülung“ auswählen. Beginnt zu reinigen;ca. 5 Minuten für die Reinigung warten.;none;0;none
+40;Arbeitseinweisung Deckel Maho DMC 50H;„Spänespülung““ auswählen. Die Spänespülung wird nun ausgeschaltet.;none;none;0;none
+41;Arbeitseinweisung Deckel Maho DMC 50H;„Werkstückdusche“ auswählen. Werkzeugdusche wird nun ausgeschaltet.;none;none;0;none
+42;Arbeitseinweisung Deckel Maho DMC 50H;ca. 1min warten bis KSS und Späne abgelaufen sind.;none;none;0;none
+43;Arbeitseinweisung Deckel Maho DMC 50H;Die Machine-Taste drücken.;none;none;0;none
+44;Arbeitseinweisung Deckel Maho DMC 50H;MDA-Taste drücken.;none;none;0;none
+45;Arbeitseinweisung Deckel Maho DMC 50H;Im MDA-Feld auf dem Bildschirm das Semikolon wieder vor „T=“OI_MK_50_HM“ hinzufügen. T=“OI_MK_50_HM wird zu:;T=“OI_MK_50_HM.;none;0;none
+46;Arbeitseinweisung Deckel Maho DMC 50H;Die Cycle Start-Taste drücken und kurz warten.;none;none;0;none
+47;Arbeitseinweisung Deckel Maho DMC 50H;Fegen Sie mit dem Handfeger den Rüstraum spannfrei (NICHT mit Druckluft). Die Späne dabei in die Schlitze links und rechts fegen und mit einem Papiertuch Innenraum trocken wischen.;none;none;0;none
+48;Arbeitseinweisung Deckel Maho DMC 50H;Beide Scheiben bitte reinigen. Bearbeitungsraum und Rüstpatz.;none;none;0;none
+49;Arbeitseinweisung Deckel Maho DMC 50H;Alle Türen öffnen; da sie sonst verriegeln.;none;0;none
+50;Arbeitseinweisung Deckel Maho DMC 50H;Maschinenmenü (1) öffnen;Pfeiltaste (2) drücken und Exit (3) auswählen.;none;0;none
+51;Arbeitseinweisung Deckel Maho DMC 50H;Warten Sie bis dieser Bildschirm erscheint und schalten sie im Anschluss am Hauptschalter die Maschine aus. ;Achtung: Bitte nicht vorzeitig ausschalten!;none;0;none
+52;Arbeitseinweisung Deckel Maho DMC 50H;Zuletzt drehen Sie die Druckluft zu.;none;none;0;none
