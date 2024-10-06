@@ -2,7 +2,8 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Deaktivieren des Seitenzooms -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">
     <title>CSV Kartenanzeige mit Bootstrap</title>
     
     <!-- Bootstrap CSS -->
@@ -11,40 +12,21 @@
     <style>
         body {
             background-color: #f8f9fa;
-            padding-top: 50px;
+            padding-top: 70px; /* Höhe der Navbar */
+            padding-bottom: 70px; /* Höhe des Footers */
         }
-        .card-number {
-            position: relative;
-            top: -40px;
-            left: 0;
+        /* Navbar-Titel */
+        .navbar-title {
             font-weight: bold;
-            color: #fff;
-            max-width: 150px;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 5px 10px;
-            border-radius: 5px;
-            z-index: 2;
         }
-        .card-title-overlay {
-            position: relative;
-            top: -20px;
-            left: 0;
-            color: #fff;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 5px 10px;
-            border-radius: 5px;
-            max-width: 500px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            z-index: 2;
-        }
+        /* Feste Größe für Bilder */
         .card-img-custom {
             width: 256px;
             height: 256px;
             object-fit: cover;
             flex-shrink: 0;
         }
+        /* Begrenzung der Textlänge */
         .card-text-fixed {
             height: calc(1.2em * 12); /* 6 Zeilen bei 1.2em Zeilenhöhe */
             overflow: hidden;
@@ -58,9 +40,6 @@
             display: -webkit-box;
             -webkit-line-clamp: 6;
             -webkit-box-orient: vertical;
-        }
-        .navigation-buttons {
-            margin-top: 20px;
         }
         /* Sicherstellen, dass die Karte immer das gleiche Layout behält */
         .card-body {
@@ -80,149 +59,242 @@
                 height: 256px;
             }
         }
+        /* Verstecken des kartentitels im Kartenbereich */
+        #cardTitle {
+            display: none;
+        }
+        /* Footer-Stil */
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #f8f9fa;
+            color: black;
+            text-align: center;
+            padding: 10px 0;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+        }
+        /* Navbar Schatten */
+        .navbar {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        /* Bild-Spalte zentrieren */
+        .card-img-custom-container {
+            display: flex;
+            justify-content: center; /* Horizontal zentrieren */
+            align-items: center;     /* Vertikal zentrieren */
+            width: 256px;
+            height: 256px;
+        }
+        .card-img-custom {
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        /* Benutzerdefinierter Container mit maximaler Breite */
+        .custom-container {
+            max-width: 800px;
+            margin: 0 auto; /* Zentriert den Container horizontal */
+            padding: 0 15px; /* Optional: Hinzufügen von horizontalem Padding */
+        }
+        /* Anpassung der Card Number */
+        #cardNumberContainer {
+            display: flex;
+            justify-content: center; /* Zentriert die Card Number horizontal */
+            margin-bottom: 20px; /* Abstand nach unten */
+        }
+        /* Anpassung des Skip-Buttons */
+        .skip-button-container {
+            display: flex;
+            justify-content: center; /* Zentriert den Skip-Button horizontal */
+            margin-top: 15px;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- Card-Nummer und Titel außerhalb des Kartencontainers -->
-    <div id="cardNumberTitleContainer" class="mb-2">
-        <div class="card-number">Karte 1 / 3</div>
-        <div class="card-title-overlay">Arbeitseinweisung Deckel Maho DMC 50H</div>
-    </div>
+    <!-- Navigationsleiste mit dem Titel und den Buttons -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <span class="navbar-brand navbar-title" id="navbarTitle">Hephaistos</span>
+            <div class="d-flex">
+                <button id="prevBtn" class="btn btn-outline-primary me-2" disabled>Zurück</button>
+                <button id="nextBtn" class="btn btn-outline-primary">Weiter</button>
+            </div>
+        </div>
+    </nav>
     
-    <div id="cardContainer" class="position-relative">
-        <!-- Statische Karte -->
-        <div class="card mb-4 shadow-sm">
-            <div class="card-body">
-                <!-- Text-Spalte -->
-                <div class="flex-grow-1">
-                    <p id="mainText" class="card-text-fixed mb-2">Schalten Sie den Luftdruck ein. Hierzu muss der Luftdruckhahn hinter der Fräsmaschine aufgedreht werden.</p>
-                    <div id="warningText" class="alert alert-warning alert-fixed">Wichtig: Ausgangszustand wie in Dokument „Vorbereitung und Einrichtung“ beschrieben, herstellen.</div>
-                </div>
+    <!-- Benutzerdefinierter Container mit maximaler Breite -->
+    <div class="container custom-container">
+        <!-- Card-Nummer außerhalb des Kartencontainers -->
+        <div id="cardNumberContainer" class="mb-2">
+            <div class="badge bg-secondary" style="font-size: 1rem;" id="cardNumber">Karte 1 / 3</div>
+        </div>
+        
+        <div id="cardContainer" class="position-relative">
+            <!-- Statische Karte -->
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <!-- Text-Spalte -->
+                    <div class="flex-grow-1">
+                        <p id="mainText" class="card-text-fixed mb-2">Schalten Sie den Luftdruck ein. Hierzu muss der Luftdruckhahn hinter der Fräsmaschine aufgedreht werden.</p>
+                        <div id="warningText" class="alert alert-warning alert-fixed">Wichtig: Ausgangszustand wie in Dokument „Vorbereitung und Einrichtung“ beschrieben, herstellen.</div>
+                    </div>
 
-                <!-- Bild-Spalte -->
-                <div class="flex-shrink-0">
-                    <img id="cardImage" src="images/xbox.jpg" alt="Arbeitseinweisung Deckel Maho DMC 50H" class="img-fluid rounded card-img-custom">
+                    <!-- Bild-Spalte -->
+                    <div class="flex-shrink-0 card-img-custom-container">
+                        <img id="cardImage" src="images/xbox.jpg" alt="Arbeitseinweisung Deckel Maho DMC 50H" class="img-fluid rounded card-img-custom">
+                    </div>
                 </div>
             </div>
         </div>
+        
+        <!-- "Arbeitsschritt überspringen" Button -->
+        <div class="skip-button-container">
+            <button id="skipBtn" class="btn btn-warning">Arbeitsschritt überspringen</button>
+        </div>
     </div>
-
-    <div class="d-flex justify-content-between navigation-buttons">
-        <button id="prevBtn" class="btn btn-primary" disabled>Zurück</button>
-        <button id="nextBtn" class="btn btn-primary">Weiter</button>
-    </div>
-</div>
-
-<!-- Bootstrap JS und Abhängigkeiten -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- JavaScript zum Aktualisieren der UI -->
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const cardNumberTitleContainer = document.getElementById('cardNumberTitleContainer');
-        const cardNumberElement = cardNumberTitleContainer.querySelector('.card-number');
-        const cardTitleElement = cardNumberTitleContainer.querySelector('.card-title-overlay');
-        const mainTextElement = document.getElementById('mainText');
-        const warningTextElement = document.getElementById('warningText');
-        const cardImageElement = document.getElementById('cardImage');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-
-        let cards = [];
-        let currentIndex = 0;
-
-        // Funktion zum Laden der CSV-Datei
-        fetch('Blatt1.csv')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Netzwerkantwort war nicht ok: ${response.statusText}`);
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div>
+            &copy; 2024 Marcella Haller & Alexander Ast <a href="#" class="text-white text-decoration-none">Impressum</a>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap JS und Abhängigkeiten -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- JavaScript zum Aktualisieren der UI -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cardNumberElement = document.getElementById('cardNumber');
+            const navbarTitleElement = document.getElementById('navbarTitle');
+            const mainTextElement = document.getElementById('mainText');
+            const warningTextElement = document.getElementById('warningText');
+            const cardImageElement = document.getElementById('cardImage');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const skipBtn = document.getElementById('skipBtn');
+    
+            let cards = [];
+            let currentIndex = 0;
+    
+            // Funktion zum Laden der CSV-Datei
+            fetch('Blatt1.csv')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Netzwerkantwort war nicht ok: ${response.statusText}`);
+                    }
+                    return response.text();
+                })
+                .then(text => {
+                    parseCSV(text);
+                    if (cards.length > 0) {
+                        displayCard(currentIndex);
+                        updateButtons();
+                    } else {
+                        mainTextElement.textContent = 'Keine Daten verfügbar';
+                        navbarTitleElement.textContent = 'Hephaistos';
+                    }
+                })
+                .catch(error => {
+                    console.error('Fehler beim Laden der CSV:', error);
+                    mainTextElement.textContent = 'Fehler beim Laden der Daten';
+                    navbarTitleElement.textContent = 'Hephaistos';
+                });
+    
+            // Funktion zum Parsen der CSV
+            function parseCSV(data) {
+                const lines = data.trim().split('\n');
+                const headers = lines[0].split(';').map(header => header.trim());
+                for (let i = 1; i < lines.length; i++) {
+                    const obj = {};
+                    const currentline = lines[i].split(';');
+                    headers.forEach((header, index) => {
+                        obj[header] = currentline[index] ? currentline[index].trim() : ''; // Leere Werte zulassen
+                    });
+                    cards.push(obj);
                 }
-                return response.text();
-            })
-            .then(text => {
-                parseCSV(text);
-                if (cards.length > 0) {
+            }
+    
+            // Funktion zum Anzeigen einer Karte
+            function displayCard(index) {
+                const cardData = cards[index];
+                const totalCards = cards.length; // Gesamtanzahl der Karten
+    
+                // Aktualisiere die Kartennummer
+                cardNumberElement.textContent = `Karte ${index + 1} / ${totalCards}`;
+    
+                // Aktualisiere den Titel in der Navigationsleiste
+                navbarTitleElement.textContent = cardData['Titel'] ? cardData['Titel'] : 'Kein Titel';
+    
+                // Aktualisiere den Haupttext
+                mainTextElement.textContent = cardData['Maintext'] ? cardData['Maintext'] : 'Kein Text verfügbar';
+    
+                // Aktualisiere die Warnung
+                if (cardData['Warning'] && cardData['Warning'].toLowerCase() !== 'none') {
+                    warningTextElement.textContent = cardData['Warning'];
+                } else {
+                    warningTextElement.textContent = 'Keine Warnung verfügbar';
+                }
+    
+                // Aktualisiere das Bild
+                if (cardData['Media'] && cardData['Media'].toLowerCase() !== 'none') {
+                    cardImageElement.src = cardData['Media'];
+                    cardImageElement.alt = cardData['Titel'] ? cardData['Titel'] : 'Kein Titel';
+                } else {
+                    cardImageElement.src = 'https://via.placeholder.com/256?text=Kein+Bild';
+                    cardImageElement.alt = 'Kein Bild verfügbar';
+                }
+    
+                // Aktualisiere den "Arbeitsschritt überspringen" Button
+                if (cardData['SwitchOn'] === '1') {
+                    skipBtn.disabled = false;
+                } else {
+                    skipBtn.disabled = true;
+                }
+            }
+    
+            // Funktion zur Aktualisierung der Button-States
+            function updateButtons() {
+                prevBtn.disabled = currentIndex === 0;
+                nextBtn.disabled = currentIndex === cards.length - 1;
+            }
+    
+            // Event Listener für den "Weiter" Button
+            nextBtn.addEventListener('click', () => {
+                if (currentIndex < cards.length - 1) {
+                    currentIndex++;
+                    displayCard(currentIndex);
+                    updateButtons();
+                }
+            });
+    
+            // Event Listener für den "Zurück" Button
+            prevBtn.addEventListener('click', () => {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    displayCard(currentIndex);
+                    updateButtons();
+                }
+            });
+    
+            // Event Listener für den "Arbeitsschritt überspringen" Button
+            skipBtn.addEventListener('click', () => {
+                const currentCard = cards[currentIndex];
+                const targetIndex = parseInt(currentCard['SelectedCard'], 10) - 1; // Annahme: SelectedCard ist 1-basiert
+    
+                if (!isNaN(targetIndex) && targetIndex >= 0 && targetIndex < cards.length) {
+                    currentIndex = targetIndex;
                     displayCard(currentIndex);
                     updateButtons();
                 } else {
-                    mainTextElement.textContent = 'Keine Daten verfügbar';
+                    alert('Ungültiger Arbeitsschritt zum Überspringen.');
                 }
-            })
-            .catch(error => {
-                console.error('Fehler beim Laden der CSV:', error);
-                mainTextElement.textContent = 'Fehler beim Laden der Daten';
             });
-
-        // Funktion zum Parsen der CSV
-        function parseCSV(data) {
-            const lines = data.trim().split('\n');
-            const headers = lines[0].split(';').map(header => header.trim());
-            for (let i = 1; i < lines.length; i++) {
-                const obj = {};
-                const currentline = lines[i].split(';');
-                headers.forEach((header, index) => {
-                    obj[header] = currentline[index] ? currentline[index].trim() : ''; // Leere Werte zulassen
-                });
-                cards.push(obj);
-            }
-        }
-
-        // Funktion zum Anzeigen einer Karte
-        function displayCard(index) {
-            const cardData = cards[index];
-            const totalCards = cards.length; // Gesamtanzahl der Karten
-
-            // Aktualisiere die Kartennummer und den Titel
-            cardNumberElement.textContent = `Karte ${index + 1} / ${totalCards}`;
-            cardTitleElement.textContent = cardData['Titel'] ? cardData['Titel'] : 'Kein Titel';
-
-            // Aktualisiere den Haupttext
-            mainTextElement.textContent = cardData['Maintext'] ? cardData['Maintext'] : 'Kein Text verfügbar';
-
-            // Aktualisiere die Warnung
-            if (cardData['Warning'] && cardData['Warning'].toLowerCase() !== 'none') {
-                warningTextElement.textContent = cardData['Warning'];
-            } else {
-                warningTextElement.textContent = 'Keine Warnung verfügbar';
-            }
-
-            // Aktualisiere das Bild
-            if (cardData['Media'] && cardData['Media'].toLowerCase() !== 'none') {
-                cardImageElement.src = cardData['Media'];
-                cardImageElement.alt = cardData['Titel'] ? cardData['Titel'] : 'Kein Titel';
-            } else {
-                cardImageElement.src = 'https://via.placeholder.com/256?text=Kein+Bild';
-                cardImageElement.alt = 'Kein Bild verfügbar';
-            }
-        }
-
-        // Funktion zur Aktualisierung der Button-States
-        function updateButtons() {
-            prevBtn.disabled = currentIndex === 0;
-            nextBtn.disabled = currentIndex === cards.length - 1;
-        }
-
-        // Event Listener für den "Weiter" Button
-        nextBtn.addEventListener('click', () => {
-            if (currentIndex < cards.length - 1) {
-                currentIndex++;
-                displayCard(currentIndex);
-                updateButtons();
-            }
         });
-
-        // Event Listener für den "Zurück" Button
-        prevBtn.addEventListener('click', () => {
-            if (currentIndex > 0) {
-                currentIndex--;
-                displayCard(currentIndex);
-                updateButtons();
-            }
-        });
-    });
-</script>
+    </script>
 
 </body>
 </html>
